@@ -1,0 +1,43 @@
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_security_group" "tomcat_sg" {
+  name        = "tomcat-sg"
+  description = "Allow SSH and HTTP"
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+variable "ec2_instance_count" {
+  type = number
+  default = 1
+  description = "Number of ec2 instances to be created for Tomcat Setup"
+}
+resource "aws_instance" "tomcat" {
+  count = var.ec2_instance_count
+  ami           = "ami-0d54604676873b4ec" # Amazon Linux 2 AMI (update as needed)
+  instance_type = "t2.micro"
+  key_name      = "DhanuDevops"         # Replace with your key name
+  security_groups = [aws_security_group.tomcat_sg.name]
+  tags = {
+    Name = "TomcatServer"
+    Role = "tomcat"
+    Env  = "dev"
+  }
+}
