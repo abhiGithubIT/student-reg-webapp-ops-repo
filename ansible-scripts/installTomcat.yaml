@@ -8,15 +8,20 @@
         url: https://download.java.net/openjdk/jdk17.0.0.1/ri/openjdk-17.0.0.1+2_linux-x64_bin.tar.gz
         dest: /opt/openjdk-17_linux-x64_bin.tar.gz
         mode: '0644'
+    - name: Create /opt/java-17 directory
+      file:
+        path: /opt/java-17 
+        state: directory
     - name: Extract OpenJDK 17 tarball
       unarchive:
         src: /opt/openjdk-17_linux-x64_bin.tar.gz
-        dest: /opt/
+        dest: /opt/java-17
+        extra_opts: [--strip-components=1]
         remote_src: yes
-    - name: Rename extracted directory to java-17
-      command: mv /opt/jdk-17.0.0.1 /opt/java-17
-      args:
-        removes: /opt/jdk-17.0.0.1
+    #- name: Rename extracted directory to java-17
+    #  command: mv /opt/jdk-17.0.0.1 /opt/java-17
+    #  args:
+    #    removes: /opt/jdk-17.0.0.1
     - name: Set JAVA_HOME and PATH in /etc/profile
       blockinfile:
         path: /etc/profile
