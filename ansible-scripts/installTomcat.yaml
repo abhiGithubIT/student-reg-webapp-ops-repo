@@ -47,6 +47,8 @@
         dest: /opt/tomcat
         remote_src: yes
         extra_opts: [--strip-components=1]
+        owner: ec2-user
+        group: ec2-user
     - name: Create systemd service file for Tomcat
       copy:
         dest: /etc/systemd/system/tomcat.service
@@ -57,16 +59,18 @@
 
           [Service]
           Type=forking
+
           User=ec2-user
           Group=ec2-user
-          Environment="JAVA_HOME=/opt/java-17"
+
+          Environment="JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))"
           Environment="CATALINA_PID=/opt/tomcat/temp/tomcat.pid"
           Environment="CATALINA_HOME=/opt/tomcat"
           Environment="CATALINA_BASE=/opt/tomcat"
-          Environment="CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC"
-          Environment="JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom"
+
           ExecStart=/opt/tomcat/bin/startup.sh
           ExecStop=/opt/tomcat/bin/shutdown.sh
+
           Restart=on-failure
 
           [Install]
