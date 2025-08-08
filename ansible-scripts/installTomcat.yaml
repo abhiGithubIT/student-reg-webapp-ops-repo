@@ -52,8 +52,8 @@
 
           [Service]
           Type=forking
-          User=tomcat
-          Group=tomcat
+          User=ec2-user
+          Group=ec2-user
           Environment="JAVA_HOME=/opt/java-17"
           Environment="CATALINA_PID=/opt/tomcat/temp/tomcat.pid"
           Environment="CATALINA_HOME=/opt/tomcat"
