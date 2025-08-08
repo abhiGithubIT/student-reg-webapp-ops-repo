@@ -9,7 +9,8 @@ pipeline {
     tools {
         terraform 'Terraform'
     }
-    
+
+
     environment {
         AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
@@ -26,10 +27,12 @@ pipeline {
                     sh '''
                         cd terraform
                         terraform version
-                        terraform init -no-color
-                        terraform plan -no-color
-                        terraform apply -auto-approve -no-color
-                    '''
+                        terraform init -input=false -no-color
+                        terraform validate -no-color
+                        terraform plan -input=false -no-color -out=tfplan 
+                        terraform apply -input=false -auto-approve -no-color tfplan    
+                        '''
+                                
             }
         }
         stage('Run Ansible Playbook') {
@@ -39,6 +42,7 @@ pipeline {
                         cd ansible-scripts
                         # Display host details using dynamic inventory
                         ansible-inventory -i aws_ec2.yaml --graph
+                        ansible -i aws_ec2.yaml _tomcat -m wait_for -a "port=22 timeout=300" -e ansible_ssh_private_key_file=${aws_pem_file} --ssh-common-args='-o StrictHostKeyChecking=no'
                         # Run the playbook
                         ansible-playbook -i aws_ec2.yaml installTomcat.yaml -e ansible_ssh_private_key_file=${aws_pem_file} --ssh-common-args='-o StrictHostKeyChecking=no'
                     '''

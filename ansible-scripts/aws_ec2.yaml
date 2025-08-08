@@ -2,7 +2,7 @@ plugin: aws_ec2
 regions:
   - ap-south-1
 filters:
-  tag:Role: tomcat
+  instance-state-name: running
 keyed_groups:
   - key: tags.Role
     prefix: ""

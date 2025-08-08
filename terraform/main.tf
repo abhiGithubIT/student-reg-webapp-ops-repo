@@ -25,11 +25,7 @@ resource "aws_security_group" "tomcat_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-variable "ec2_instance_count" {
-  type = number
-  default = 2
-  description = "Number of ec2 instances to be created for Tomcat Setup"
-}
+
 resource "aws_instance" "tomcat" {
   count = var.ec2_instance_count
   ami           = "ami-0d54604676873b4ec" # Amazon Linux 2 AMI (update as needed)
