@@ -8,3 +8,4 @@ keyed_groups:
     prefix: ""
 hostnames:
   - private-ip-address
+strict: False  
