@@ -11,7 +11,7 @@ pipeline {
                 withCredentials([file(credentialsId: 'AWSEC2PEM', variable: 'aws_pem_file')]) {
                    sh "ansible tomcatServers -i ansible-scripts/hosts -m ping -e ansible_ssh_private_key_file=${aws_pem_file} --ssh-common-args='-o StrictHostKeyChecking=no'"
                  }
-               
+
             }
         }
         stage("Install Tomcat" ) {

@@ -2,6 +2,7 @@ provider "aws" {
   region = "ap-south-1"
 }
 
+
 resource "aws_security_group" "tomcat_sg" {
   name        = "tomcat-sg"
   description = "Allow SSH and HTTP"
@@ -26,7 +27,7 @@ resource "aws_security_group" "tomcat_sg" {
 }
 variable "ec2_instance_count" {
   type = number
-  default = 1
+  default = 2
   description = "Number of ec2 instances to be created for Tomcat Setup"
 }
 resource "aws_instance" "tomcat" {
@@ -40,4 +41,9 @@ resource "aws_instance" "tomcat" {
     Role = "tomcat"
     Env  = "dev"
   }
+}
+
+output "tomcatservers_privateIPs" {
+  description = "Private IP addresses of all Tomcat EC2 instances"
+  value       = aws_instance.tomcat[*].private_ip
 }
