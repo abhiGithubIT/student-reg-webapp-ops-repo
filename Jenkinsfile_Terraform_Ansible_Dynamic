@@ -1,6 +1,15 @@
 pipeline {
     agent {label 'ansible'}
 
+    /* 
+        Make sure u have terraform installed Directly on the Jenkins(Salve) or 
+        define Terraform as Global Tool by first install terraform plugin. 
+    */
+
+    tools {
+        terraform 'Terraform'
+    }
+    
     environment {
         AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
@@ -12,15 +21,12 @@ pipeline {
                 git branch: 'main', credentialsId: 'GitHubCred', url: 'https://github.com/Rushi-Technologies/student-reg-webapp-ops-repo.git'
             }
         }
-        /* 
-          Make sure u have terraform installed Directly on the Jenkins(Salve) or 
-          define Terraform as Global Tool by first install terraform plugin. 
-        */
         stage('Terraform Apply') {
             steps {
                     sh '''
                         cd terraform
-                        terraform init
+                        terraform version
+                        terraform init -no-color
                         terraform plan -no-color
                         terraform apply -auto-approve -no-color
                     '''
