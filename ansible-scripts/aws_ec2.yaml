@@ -5,6 +5,6 @@ filters:
   tag:Role: tomcat
 keyed_groups:
   - key: tags.Role
-    prefix: ''
+    prefix: ""
 hostnames:
   - private-ip-address
