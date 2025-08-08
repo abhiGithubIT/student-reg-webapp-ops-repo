@@ -1,0 +1,4 @@
+[WebServers]
+172.31.11.51 ansible_user={{ ssh_username }}
+[tomcatServers]
+172.31.4.226 ansible_user={{ ssh_username }}
