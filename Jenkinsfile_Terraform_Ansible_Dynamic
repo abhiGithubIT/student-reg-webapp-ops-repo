@@ -12,12 +12,17 @@ pipeline {
                 git branch: 'main', credentialsId: 'GitHubCred', url: 'https://github.com/Rushi-Technologies/student-reg-webapp-ops-repo.git'
             }
         }
+        /* 
+          Make sure u have terraform installed Directly on the Jenkins(Salve) or 
+          define Terraform as Global Tool by first install terraform plugin. 
+        */
         stage('Terraform Apply') {
             steps {
                     sh '''
                         cd terraform
                         terraform init
-                        terraform apply -auto-approve
+                        terraform plan -no-color
+                        terraform apply -auto-approve -no-color
                     '''
             }
         }
