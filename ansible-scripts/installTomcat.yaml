@@ -1,5 +1,5 @@
 - name: Install OpenJDK 17 and Apache Tomcat
-  hosts: tomcat
+  hosts: _tomcat
   become: yes
   tasks:
     # Install Java
