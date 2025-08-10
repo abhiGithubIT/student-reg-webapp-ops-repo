@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Git Clone') {
             steps {
-                git branch: 'main', credentialsId: 'GitHubCred', url: 'https://github.com/Rushi-Technologies/student-reg-webapp-ops-repo.git'
+                git branch: 'main', credentialsId: 'GitHubCred', url: 'https://github.com/abhiGithubIT/student-reg-webapp-ops-repo.git'
             }
         }
         stage('Ping Tomcat Server') {
