@@ -16,7 +16,7 @@ pipeline {
         // Using Static Inventory file
         stage('Ping Tomcat Server') {
             steps {
-                withCredentials([file(credentialsId: 'AWSEC2PEM', variable: 'aws_pem_file')]) {
+                withCredentials([file(credentialsId: 'tomcatcredential', variable: 'aws_pem_file')]) {
                    sh "ansible _tomcat -i ansible-scripts/hosts -m ping -e ansible_ssh_private_key_file=${aws_pem_file} --ssh-common-args='-o StrictHostKeyChecking=no'"
                  }
 
