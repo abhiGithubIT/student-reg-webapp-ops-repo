@@ -1,2 +1,2 @@
-[tomcat]
+[_tomcat]
 172.31.0.215 ansible_user="{{ ssh_username }}"
