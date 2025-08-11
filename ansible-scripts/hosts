@@ -1,5 +1,4 @@
-[WebServers]
-172.31.11.51 ansible_user="{{ ssh_username }}"
-[_tomcat]
-172.31.44.50 ansible_user="{{ ssh_username }}"
-172.31.34.242 ansible_user="{{ ssh_username }}"
+
+[tomcat]
+172.31.11.124 ansible_user="{{ ssh_username }}"
+172.31.1.254 ansible_user="{{ ssh_username }}"
