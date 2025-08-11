@@ -4,12 +4,18 @@ pipeline {
     stages {
         stage('Git Clone') {
             steps {
-                git branch: 'main', 
-                    credentialsId: 'GithubCred', 
-                    url: 'https://github.com/abhiGithubIT/student-reg-webapp-ops-repo.git',
-                    changelog: false, 
-                    poll: false,
-                    gitTool: 'Default' // This forces Jenkins to use your configured Git installation
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/abhiGithubIT/student-reg-webapp-ops-repo.git',
+                        credentialsId: 'GithubCred'
+                    ]],
+                    gitTool: 'Default' // Forces use of configured Git tool
+                ])
             }
         }
 
