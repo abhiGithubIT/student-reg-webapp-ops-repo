@@ -8,11 +8,6 @@ pipeline {
     }
 
     stages {
-        stage('Git Clone') {
-            steps {
-                git branch: 'main', credentialsId: 'GithubCred', url: 'https://github.com/abhiGithubIT/student-reg-webapp-ops-repo.git'
-            }
-        }
         // Using Static Inventory file
         stage('Ping Tomcat Server') {
             steps {
