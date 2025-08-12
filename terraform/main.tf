@@ -30,7 +30,7 @@ resource "aws_instance" "tomcat" {
   count = var.ec2_instance_count
   ami           = "ami-0d54604676873b4ec" # Amazon Linux 2 AMI (update as needed)
   instance_type = "t2.micro"
-  key_name      = "DhanuDevops"         # Replace with your key name
+  key_name      = "devops205.pem"         # Replace with your key name
   security_groups = [aws_security_group.tomcat_sg.name]
   tags = {
     Name = "TomcatServer"
